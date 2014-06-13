@@ -1,0 +1,39 @@
+doctype html
+html
+ head
+  title= title
+  link(rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css")
+  script(type='text/javascript' name='baidu-tc-cerfication' src='http://apps.bdimg.com/cloudaapi/lightapp.js#e53c2cbd6be306baa0f18a4629e79053')
+  script(type='text/javascript')
+    window.bd && bd._qdc && bd._qdc.init({app_id: '62744d305325b8e8a816bdea'});
+ body
+  script(src="js/jquery.2.1.1.js")
+  script(src="js/bootstrap/js/bootstrap.min.js")
+  include nav
+  //
+    div#accordion.panel-group
+    div.panel.panel-primary
+      div.panel-heading
+        h4.panel-title
+          a(href='#col1' data-toggle='collapse' data-parent='#accordion') Blog
+      div#col1.collapse.panel-collapse
+        div.panel-body
+          a(href='#') My Blog
+        div.panel-body
+          a(href='#') Others
+    div.panel.panel-primary
+      div.panel-heading
+        h4.panel-title
+          a(href='#col2' data-toggle='collapse' data-parent='#accordion') News
+      div#col2.collapse.panel-collapse
+        div.panel-body
+          a(href='#') Home
+        div.panel-body
+          a(href='#') News
+  div.container
+    div.row
+      section
+      include menu
+    div.row
+      section
+  block content
