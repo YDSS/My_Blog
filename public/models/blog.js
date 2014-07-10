@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    Db = require('../system/connectMongo.js'),
     Schema = mongoose.Schema,
     blogSchema = new Schema({
       title: String,
@@ -33,7 +34,7 @@ blogSchema.statics.drop_by_id = function drop_by_id(id, callback) {
   this.findByIdAndRemove(id, callback);
 };
 
-var Blog = mongoose.model('blogs', blogSchema);
+var Blog = Db.model('blogs', blogSchema);
 //blog settings
 Blog.limit = 5; //turn page limit for blog home and read module
 

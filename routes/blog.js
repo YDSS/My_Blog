@@ -10,6 +10,7 @@ router.get('/home', function(req, res) {
 /*read blog*/
 router.get('/read', function(req, res) {
   Blog.read_all(function(err, docs) {
+    debugger;
     if (err) return handleError(err);
     res.render('blog/read', {
       blogs: docs 

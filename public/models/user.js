@@ -1,5 +1,5 @@
-//var mongodb = require('./db');
 var mongoose = require('mongoose'),
+    Db = require('../system/connectMongo.js'),
     Schema = mongoose.Schema,
     userSchema = new Schema({
       name: { type: String, index: true, unique: true },
@@ -10,10 +10,12 @@ var mongoose = require('mongoose'),
     });
 
 userSchema.statics.get = function(username, callback) {
+  debugger;
   this.findOne({ name: username })
       .select('name password')
       .exec(function(err, user) {
         if (err) return callback(err);
+        debugger;
         //return user
         return callback(err, user);
       });
@@ -26,5 +28,5 @@ userSchema.methods.createUser = function(callback) {
   });
 };
 
-User =  mongoose.model('users', userSchema);
+User =  Db.model('users', userSchema);
 module.exports = User;

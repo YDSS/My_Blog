@@ -5,6 +5,7 @@ var User = require('../public/models/user');
 
 /* GET home page. */
 router.get('/', function(req, res) {
+  debugger;
   res.render('login/login', { 
     title: "YDS's blog"
   });
@@ -15,7 +16,6 @@ router.post('/', function(req, res) {
   var password = md5.update(req.body.password).digest('base64');
 
   User.get(req.body.username, function(err, user) {
-    debugger;
     if (!user) {
       req.flash('error', 'user not exists');
       return res.redirect('/login');

@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var settings = require('./public/settings');
+var settings = require('./public/system/settings');
 var flash = require('connect-flash');
-var mongoose = require('mongoose');
+//var Db = require('./public/system/connectMongo');
 
 //routers
 var index = require('./routes/index');
@@ -96,35 +96,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-// connect to mongoDB with mongoose
-//var url = 'mongodb://' + settings.user + ':'+ settings.pass + '@' +
- //settings.host + ':' + settings.port + '/' + settings.db;
-var db = mongoose.createConnection(),
-    options = {
-      db: { native_parser: true },
-      server: { poolSize: 5 },
-      user: settings.user,
-      pass: settings.pass
-    };
-db.open(settings.host, settings.db, settings.port, options, function() {
-  console.log('mongoDB connected!');
-});
-db.on('error', function (err) {
-  console.error.bind(console, 'connection error:');
-  //listen BAE mongodb,if except throws then close the connection
-  //why have to do this?Clause it'll be disconnected if it free after 30s by BAE 
-  db.close();
-});
-//when close, reopen a connect
-db.on('close', function() {
-  db.open(settings.host, settings.db, settings.port, options);
-});
-/*
-db.once('open', function() {
-  console.log('mongoose connect success');
-});
-*/
 
 // server
 http.createServer(app, function(req, res) {
