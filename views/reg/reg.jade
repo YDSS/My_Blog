@@ -1,0 +1,36 @@
+doctype html
+html
+  head 
+    include ../include/head
+  body
+    include ../include/body
+    include ../layout/nav
+    div.container
+      - if (error && error.length)
+        div.alert.alert-warning 
+          strong Warning:  
+          | #{error} 
+      div.col-md-5.col-md-offset-3
+        form.form-horizontal(method='post' role='form')
+          fieldset
+            legend User Register
+            div.form-group
+              label.col-sm-2.control-label(for='username') UserName
+              div.col-md-8
+                input#username.form-control(name='username' type='text' placeholder='username')
+            div.form-group 
+              label.col-sm-2.control-label(for='email') Email
+              div.col-md-8
+                input#email.form-control(name='email' type='email' placeholder='Email')
+            div.form-group
+              label.col-sm-2.control-label(for='password') Password
+              div.col-md-8
+                input#password.form-control(name='password' type='password' placeholder='Password')
+            div.form-group
+              label.col-sm-2.control-label(for='repeat') 
+              div.col-md-8
+                input#repeat.form-control(name='repeat' type='password' placeholder='Repeat Password') 
+            div.form-group
+              div.col-sm-offset-2
+                button.btn.btn-primary(type='submit') Sign in
+

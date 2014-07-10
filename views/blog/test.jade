@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    script.
+      var k = #{ val };
+      console.log(k);
+  body
+    button#btn.btn.btn-primary(type='button') #{ val }
+    - var i = val
+    - console.log(i.length)
+    span #{ i }
+

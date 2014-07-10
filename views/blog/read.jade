@@ -1,0 +1,34 @@
+extends ../layout/layout
+
+append body 
+  script.
+      $(document).ready(function() {
+      });
+
+block content
+  ul#tabs.nav.nav-tabs
+    li
+      a(href='/blog/home') Home
+    li.active
+      a(href='/blog/read') Read
+    li
+      a(href='/blog/write') Write
+  .tab-content
+    .tab-pane.active
+      #accordion.panel-group
+        - var docs = blogs 
+          each doc in docs 
+            .panel.panel-warning
+              .panel-heading
+                h4.panel-title
+                  a(data-toggle='collapse' data-parent='#accordion' href='#pane'+ doc._id ) #{ doc.title }
+                  a.pull-right(href='/blog/readOne?id=' + doc._id) Enter
+                  a.pull-right(href='/blog/drop?id=' + doc._id) Delete&nbsp;&nbsp; 
+              .panel-collapse.collapse.in(id = 'pane' + doc._id)
+                .panel-body #{ doc.content }
+                .panel-footer.pull-right By&nbsp;
+                  strong #{ doc.author } 
+                  | At&nbsp;&nbsp;
+                  - var date = doc.date.toString().substr(0,25)
+                  strong #{ date }
+           

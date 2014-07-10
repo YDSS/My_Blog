@@ -1,0 +1,2 @@
+db.createCollection('blogs');
+db.blogs.ensureIndex(date_created: -1);

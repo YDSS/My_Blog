@@ -5,9 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var settings = require('./public/settings');
+var flash = require('connect-flash');
+var mongoose = require('mongoose');
 
-var routes = require('./routes/index');
+//routers
+var index = require('./routes/index');
+var home = require('./routes/home');
 var users = require('./routes/users');
+var reg = require('./routes/reg');
+var blog = require('./routes/blog'); 
+var login = require('./routes/login');
+var logout = require('./routes/logout');
+var news = require('./routes/news');
+var community = require('./routes/community');
 
 var app = express();
 
@@ -22,9 +35,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: settings.cookieSecret,
+  store: new MongoStore({
+    db: settings.db,
+    host: settings.host,
+    port: settings.port,
+    username: settings.user,
+    password: settings.pass
+  }),
+  cookie: { maxAge: 60000 }
+}));
+app.use(flash());
 
-app.use('/', routes);
+//view support,dynamicHelper
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  res.locals.error = req.flash('error'); 
+  res.locals.succ = req.flash('success');
+  next();
+});
+
+app.use('/', index);
+app.use('/home', home);
 app.use('/users', users);
+app.use('/reg', reg);
+app.use('/blog', blog);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/news', news);
+app.use('/community', community);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -57,10 +97,43 @@ app.use(function(err, req, res, next) {
     });
 });
 
-//server
-http.createServer(app).listen(app.get('port'),function() {
- console.log("HTTP server is listening at port " + app.get('port'));
+// connect to mongoDB with mongoose
+//var url = 'mongodb://' + settings.user + ':'+ settings.pass + '@' +
+ //settings.host + ':' + settings.port + '/' + settings.db;
+var db = mongoose.createConnection(),
+    options = {
+      db: { native_parser: true },
+      server: { poolSize: 5 },
+      user: settings.user,
+      pass: settings.pass
+    };
+db.open(settings.host, settings.db, settings.port, options, function() {
+  console.log('mongoDB connected!');
 });
+db.on('error', function (err) {
+  console.error.bind(console, 'connection error:');
+  //listen BAE mongodb,if except throws then close the connection
+  //why have to do this?Clause it'll be disconnected if it free after 30s by BAE 
+  db.close();
+});
+//when close, reopen a connect
+db.on('close', function() {
+  db.open(settings.host, settings.db, settings.port, options);
+});
+/*
+db.once('open', function() {
+  console.log('mongoose connect success');
+});
+*/
 
+// server
+http.createServer(app, function(req, res) {
+  res.writeHead(
+    200, 
+    {'Content-Type': 'text/html'}
+  );
+}).listen(18080);
+
+console.log('server is online with port 18080...');
 
 module.exports = app;

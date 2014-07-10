@@ -1,0 +1,88 @@
+extends ../layout/layout
+
+append body 
+  script.
+      $(document).ready(function() {
+        init_model();
+      /*
+        $('#ec').toggle(
+          function() {
+            $('#title').attr('readonly', 'readonly');
+            $('#content').attr('readonly', 'readonly');
+            $(this).html('Edit');
+          },
+          function() {
+            $('#title').attr('readonly', '');
+            $('#content').attr('readonly', '');
+            $(this).html('Cancel');
+          }
+        )*/
+      });
+
+      //models: write(w) read(r) edit(e)
+      function init_model() {
+        var flag = $('#flag').val();
+        if (flag == 'w') {
+          $('#ec').css({'display': 'none'});
+          $('#dt').css({'display': 'none'});
+        }
+        if (flag == 'r') {
+          $('#title').attr('readonly', 'readonly');
+          $('#content').css({ 'display': 'none' });
+          $('#content_r').css({ 'display': ''});
+          $('#cn').css({ 'display': 'none' });
+          $('button[type="submit"]').css({'display': 'none'});
+        }
+      }
+
+      function clean() {
+        $('#title').val('');
+        $('#content').val('');
+      }
+
+      //delete current blog
+      function drop() {
+        clean();
+        var _id = $('#_id').val();
+        console.log(_id);
+        $('form').attr('action', '/blog/drop?id=' + _id).submit();
+      }
+
+block content
+  - if (error && error.length)
+    div.alert.alert-warning 
+      strong Warning:  
+      | #{error} 
+  - if (succ && succ.length)
+    div.alert.alert-warning 
+      strong Well done!  
+      | #{succ} 
+  input#flag(type='hidden' value=flag)
+  input#_id(type='hidden' value=blog._id)
+  ul#tabs.nav.nav-tabs
+    li
+      a(href='/blog/home') Home
+    li
+      a(href='/blog/read') Read
+    li.active
+      a(href='/blog/write') Write
+  br
+  .tab-content
+    .tab-pane.active
+      form#blog_write(role='form' method='post' action='/blog/write')
+        .form-group
+          label.control-label(for='title') Title
+          input#title.form-control(type='text' name='title' placeholder='Enter title' value=blog.title)
+        .form-group
+          div
+            label.control-label(for='content') Content
+            .btn-toolbar.pull-right   
+              .btn-group
+                button#ec.btn.btn-default(type='button') Edit
+                button#cn.btn.btn-default(type='button' onclick='clean();') Clean
+              .btn-group
+                button#dt.btn.btn-danger(type='button' onclick='drop()') Delete
+                button.btn.btn-primary(type='submit') Commit
+            br
+            textarea#content.form-control(form='blog_write' name='content' placeholder='Enter content here' rows=18 ) #{ blog.content }
+            #content_r.form-control(style='display: none;border: 0') #{ blog.content }

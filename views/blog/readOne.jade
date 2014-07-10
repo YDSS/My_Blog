@@ -1,0 +1,48 @@
+extends ../layout/layout
+
+append body 
+  script.
+      $(document).ready(function() {
+      });
+
+    //delete current blog
+    function drop() {
+      var _id = $('#_id').val();
+      $.post('/blog/drop', 
+        { id: _id }
+      ); 
+    }
+
+block content
+  - if (error && error.length)
+    div.alert.alert-warning 
+      strong Warning:  
+      | #{error} 
+  - if (succ && succ.length)
+    div.alert.alert-warning 
+      strong Well done!  
+      | #{succ} 
+  input#_id(type='hidden' value=blog._id)
+  ul#tabs.nav.nav-tabs
+    li
+      a(href='/blog/home') Home
+    li.active
+      a(href='/blog/read') Read
+    li
+      a(href='/blog/write') Write
+  br
+  .tab-content
+    .tab-pane.active
+      .panel.panel-primary
+        .panel-heading #{ blog.title }
+        .panel-body
+          p #{ blog.content }
+        .panel-footer
+          - var date = blog.date.toString().substr(0,15)
+          p #{ date } &nbsp;By #{ blog.author }
+      .div
+        .btn-toolbar
+          .btn-group
+            button#ec.btn.btn-default(type='button') Edit
+          .btn-group
+            button#dt.btn.btn-danger(type='button' onclick='drop()') Delete

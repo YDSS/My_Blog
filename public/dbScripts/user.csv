@@ -1,0 +1,2 @@
+db.createCollection('users');
+db.users.ensureIndex({name: 1});

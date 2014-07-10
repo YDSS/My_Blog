@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    include ../include/head
+  body
+    include ../include/body
+    include ../layout/nav
+    div.container
+      - if (error && error.length)
+        div.alert.alert-warning 
+          strong Warning:  
+          | #{error} 
+      div.row
+        div.col-md-6
+          form.form-horizontal(role='form' method='post')
+            div.form-group
+              label.control-label.col-md-2(for='username') Username
+              div.col-md-4
+                input#username.form-control(type='text' placeholder='please enter username' name='username')
+            div.form-group
+              label.control-label.col-md-2(for='password') Password
+              div.col-md-4
+                input#password.form-control(type='password' placeholder='please enter password' name='password')
+            div.form-group
+              div.col-md-2
+                button.btn.btn-primary(type='submit') Login in

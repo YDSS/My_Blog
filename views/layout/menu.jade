@@ -1,42 +1,39 @@
-div.col-md-3
-  a.thumbnail(href="#" title="my profile")
-    img(src="images/monster" alt="I'm so sorry~")
-    div.caption
-      p There are monsters out there !
-  div.heading-title 
-    strong Menus
-    span.glyphicon.glyphicon-fire.pull-right
-  div#menus.panel-group(style='padding: 1px')
-    div#blog_menus.panel.panel-primary(style='border: 0px')
-      div.panel-heading
-        h4.panel-title
-          a(data-toggle="collapse" data-parent="#blog_menus" href="#blog") Blog
-      div#blog.collapse.panel-collapse.in
-        div.panel-body(style='padding: 0px')
-          div.list-group
-            a#blog_home.list-group-item(href="#") 
-              strong Home
-            a#blog_mine.list-group-item(href="#") 
-              strong My BLOG
-    div#news_menus.panel.panel-primary
-      div.panel-heading
-        h4.panel-title
-          a(data-toggle="collapse" data-parent="#news_menus" href="#news") News
-      div#news.collapse.panel-collapse
-        div.panel-body(style='padding: 0px')  
-          div.list-group 
-            a#news_tech.list-group-item(href='#')
-              strong Tech
-    div#community_menus.panel.panel-primary
-      div.panel-heading
-        h4.panel-title
-          a(data-toggle="collapse" data-parent="#community_menus" href="#community") Communtiy
-      div#community.collapse.panel-collapse
-        div.panel-body(style='padding: 0px')  
-          div.list-group 
-            a#community_by.list-group-item(href='#')
-              strong BlogYard  
-            a#community_eye.list-group-item(href='#')
-              strong Iteye
-            a#community_gh.list-group-item(href='#')
-              strong GitHub
+a.thumbnail(href="#" title="my profile")
+  img(src="/images/monster" alt="I'm so sorry~")
+  div.caption
+    p There are monsters out there !
+div.heading-title 
+  strong Menus
+  span.glyphicon.glyphicon-fire.pull-right
+div#menus.panel-group(style='padding: 1px')
+  div#blog_menus.panel.panel-primary(style='border: 0px')
+    div.panel-heading
+      h4.panel-title
+        a(data-toggle="collapse" data-parent="#blog_menus" href="#blog") Blog
+    div#blog.collapse.panel-collapse.in
+      div.panel-body(style='padding: 0px')
+        div.list-group
+          a#blog_mine.list-group-item(href="/blog/home") 
+            strong My Blog
+  div#news_menus.panel.panel-primary
+    div.panel-heading
+      h4.panel-title
+        a(data-toggle="collapse" data-parent="#news_menus" href="#news") News
+    div#news.collapse.panel-collapse
+      div.panel-body(style='padding: 0px')  
+        div.list-group 
+          a#news_tech.list-group-item(href='#')
+            strong Tech
+  div#community_menus.panel.panel-primary
+    div.panel-heading
+      h4.panel-title
+        a(data-toggle="collapse" data-parent="#community_menus" href="#community") Communtiy
+    div#community.collapse.panel-collapse
+      div.panel-body(style='padding: 0px')  
+        div.list-group 
+          a#community_by.list-group-item(href='#')
+            strong BlogYard  
+          a#community_eye.list-group-item(href='#')
+            strong Iteye
+          a#community_gh.list-group-item(href='#')
+            strong GitHub

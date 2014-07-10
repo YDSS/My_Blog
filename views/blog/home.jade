@@ -1,0 +1,17 @@
+extends ../layout/layout
+
+append body 
+  script.
+      $(document).ready(function() {
+      });
+
+block content
+  ul#tabs.nav.nav-tabs
+    li.active
+      a(href='/blog/home') Home
+    li
+      a(href='/blog/read') Read
+    li
+      a(href='/blog/write') Write
+  .tab-content
+    .tab-pane.active
