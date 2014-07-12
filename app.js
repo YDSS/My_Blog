@@ -9,7 +9,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var settings = require('./public/system/settings');
 var flash = require('connect-flash');
-//var Db = require('./public/system/connectMongo');
+var Db = require('./public/system/connectMongo');
 
 //routers
 var index = require('./routes/index');
@@ -28,6 +28,7 @@ var app = express();
 app.set('port',process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+//app.locals.pretty = true; //output pretty html
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -95,6 +96,18 @@ app.use(function(err, req, res, next) {
         message: err.message,
         error: {}
     });
+});
+
+//mongoose connect preventing from BAE short connect
+Db.on('error', function (err) {
+  console.error.bind(console, 'connection error:');
+  //listen BAE mongodb,if except throws then close the connection
+  //why have to do this?Clause it'll be disconnected if it free after 30s by BAE 
+  Db.close();
+});
+//when close, reopen a connect
+Db.on('close', function() {
+  Db.open(settings.host, settings.db, settings.port, options);
 });
 
 // server
