@@ -7,11 +7,10 @@ html
     include ../layout/nav
     .container
       .row
-        .jumbotron.col-md-12
+        .jumbotron.col-md-12(style='background-color: #FFE7BA')
           h1 
             strong Welcome to YDS's Blog
           h4.text-center --this website is built by node.js
-          br
           br
           p
             a.btn.btn-success.btn.large(href='/home') Home
@@ -20,21 +19,22 @@ html
           //
             &nbsp;&nbsp;
             a.btn.btn-warning(href='/reg') Register
-      .row
-        .col-md-3
-          h3.text-right 
+        .col-md-4
+          h3.text-center
             身无彩凤双飞翼,
-            心有灵犀一点通。
+          h3.text-center
+            &nbsp;&nbsp;心有灵犀一点通。
           h4.text-right
             strong --陆小凤
-        .col-md-3.pull-right
-          h3.text-right 
-            雁蝶为双翼,
-            花香满人间。
-          h4.text-right 
-            strong --楚留香
-        .col-md-3
-          h3.text-right 
+        .col-md-4
+          h3.text-center
             起风了,唯有努力生存
           h4.text-right
             strong --宫崎骏
+        .col-md-4
+          h3.text-center
+            雁蝶为双翼,
+          h3.text-center
+            &nbsp;&nbsp;花香满人间。
+          h4.text-right 
+            strong --楚留香
