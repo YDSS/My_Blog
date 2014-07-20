@@ -1,22 +1,10 @@
 extends ../layout/layout
 
 append body 
+  script(src='/sea-modules/seajs/2.3.0/dist/sea.js')
   script.
       $(document).ready(function() {
         init_model();
-      /*
-        $('#ec').toggle(
-          function() {
-            $('#title').attr('readonly', 'readonly');
-            $('#content').attr('readonly', 'readonly');
-            $(this).html('Edit');
-          },
-          function() {
-            $('#title').attr('readonly', '');
-            $('#content').attr('readonly', '');
-            $(this).html('Cancel');
-          }
-        )*/
       });
 
       //models: write(w) read(r) edit(e)
@@ -28,8 +16,8 @@ append body
         }
         if (flag == 'r') {
           $('#title').attr('readonly', 'readonly');
-          $('#content').css({ 'display': 'none' });
-          $('#content_r').css({ 'display': ''});
+          // $('#content').css({ 'display': 'none' });
+          //$('#content_r').css({ 'display': ''});
           $('#cn').css({ 'display': 'none' });
           $('button[type="submit"]').css({'display': 'none'});
         }
@@ -37,7 +25,7 @@ append body
 
       function clean() {
         $('#title').val('');
-        $('#content').val('');
+        //$('#content').val('');
       }
 
       //delete current blog
@@ -47,6 +35,17 @@ append body
         console.log(_id);
         $('form').attr('action', '/blog/drop?id=' + _id).submit();
       }
+
+      //Set configuration
+      seajs.config({
+        base: '/sea-modules/',
+        alias: {
+          'jquery': 'jquery/2.1.1/jquery.js'
+        }
+      });
+
+      seajs.use('../public/frontend/main');
+
 
 block content
   - if (error && error.length)
@@ -75,7 +74,7 @@ block content
           input#title.form-control(type='text' name='title' placeholder='Enter title' value=blog.title)
         .form-group
           div
-            label.control-label(for='content') Content
+            label.control-label(for='content') Content (support MarkDown)
             .btn-toolbar.pull-right   
               .btn-group
                 button#ec.btn.btn-default(type='button') Edit
@@ -84,5 +83,6 @@ block content
                 button#dt.btn.btn-danger(type='button' onclick='drop()') Delete
                 button.btn.btn-primary(type='submit') Commit
             br
-            textarea#content.form-control(form='blog_write' name='content' placeholder='Enter content here' rows=18 ) #{ blog.content }
-            #content_r.form-control(style='display: none;border: 0') #{ blog.content }
+            //textarea#content.form-control(form='blog_write' name='content' placeholder='Enter content here' rows=18 ) #{ blog.content }
+            //#content_r.form-control(style='display: none;border: 0') #{ blog.content }
+            div#locate

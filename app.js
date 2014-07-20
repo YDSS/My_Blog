@@ -21,6 +21,7 @@ var login = require('./routes/login');
 var logout = require('./routes/logout');
 var news = require('./routes/news');
 var community = require('./routes/community');
+var mark = require('./routes/marked');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname,'/sea-modules'));
 app.use(session({
   secret: settings.cookieSecret,
   store: new MongoStore({
@@ -66,6 +68,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/news', news);
 app.use('/community', community);
+app.use('/marked', mark);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
