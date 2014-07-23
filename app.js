@@ -40,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname,'/sea-modules'));
 app.use(session({
   secret: settings.cookieSecret,
+  resave: true,
+  saveUninitialized: true,
   store: new MongoStore({
     db: settings.db,
     host: settings.host,
@@ -110,7 +112,7 @@ Db.on('error', function (err) {
 });
 //when close, reopen a connect
 Db.on('close', function() {
-  Db.open(settings.host, settings.db, settings.port, options);
+  Db.open(settings.host, settings.db, settings.port, settings.options);
 });
 
 // server
