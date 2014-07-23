@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Blog = require('../public/models/blog');
+var toMarked = require('../lib/toMarked');
 
 /* GET blog home page. */
 router.get('/home', function(req, res) {
@@ -12,6 +13,11 @@ router.get('/read', function(req, res) {
   Blog.read_all(function(err, docs) {
     debugger;
     if (err) return handleError(err);
+   
+    /*translate every content to markdown*/
+    for (var i in docs) 
+      docs[i].content = toMarked(docs[i].content);
+
     res.render('blog/read', {
       blogs: docs 
     });
@@ -43,6 +49,10 @@ router.get('/readOne', function(req, res) {
   Blog.read_by_id(id, function(err, doc) {
     if (err) return handleError(err);
     debugger;
+
+    /*translate every content to markdown*/
+    doc.content = toMarked(doc.content);
+      
     res.render('blog/readOne', {
       blog: doc,
     });

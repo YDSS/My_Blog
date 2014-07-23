@@ -13,6 +13,9 @@ append body
       ); 
     }
 
+append head
+  link(rel='stylesheet' href='/stylesheets/github.css')
+
 block content
   - if (error && error.length)
     div.alert.alert-warning 
@@ -23,7 +26,7 @@ block content
       strong Well done!  
       | #{succ} 
   input#_id(type='hidden' value=blog._id)
-  ul#tabs.nav.nav-tabs
+  ul#tabs.nav.nav-tabs(role='tablist')
     li
       a(href='/blog/home') Home
     li.active
@@ -34,9 +37,10 @@ block content
   .tab-content
     .tab-pane.active
       .panel.panel-primary
-        .panel-heading #{ blog.title }
-        .panel-body
-          p #{ blog.content }
+        .panel-heading 
+          strong #{ blog.title }
+        .panel-body 
+          != blog.content 
         .panel-footer
           - var date = blog.date.toString().substr(0,15)
           p #{ date } &nbsp;By #{ blog.author }

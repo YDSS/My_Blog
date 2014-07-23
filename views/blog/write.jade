@@ -58,7 +58,7 @@ block content
       | #{succ} 
   input#flag(type='hidden' value=flag)
   input#_id(type='hidden' value=blog._id)
-  ul#tabs.nav.nav-tabs
+  ul#tabs.nav.nav-tabs(role='tablist')
     li
       a(href='/blog/home') Home
     li
@@ -83,6 +83,4 @@ block content
                 button#dt.btn.btn-danger(type='button' onclick='drop()') Delete
                 button.btn.btn-primary(type='submit') Commit
             br
-            //textarea#content.form-control(form='blog_write' name='content' placeholder='Enter content here' rows=18 ) #{ blog.content }
-            //#content_r.form-control(style='display: none;border: 0') #{ blog.content }
             div#locate

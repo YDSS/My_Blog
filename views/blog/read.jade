@@ -1,12 +1,10 @@
 extends ../layout/layout
 
-append body 
-  script.
-      $(document).ready(function() {
-      });
+append head 
+  link(rel='stylesheet' href='/stylesheets/github.css')
 
 block content
-  ul#tabs.nav.nav-tabs
+  ul#tabs.nav.nav-tabs(role='tablist')
     li
       a(href='/blog/home') Home
     li.active
@@ -21,11 +19,13 @@ block content
             .panel.panel-warning
               .panel-heading
                 h4.panel-title
-                  a(data-toggle='collapse' data-parent='#accordion' href='#pane'+ doc._id ) #{ doc.title }
+                  a(data-toggle='collapse' data-parent='#accordion' href='#pane'+ doc._id ) 
+                    strong #{ doc.title }
                   a.pull-right(href='/blog/readOne?id=' + doc._id) Enter
                   a.pull-right(href='/blog/drop?id=' + doc._id) Delete&nbsp;&nbsp; 
               .panel-collapse.collapse.in(id = 'pane' + doc._id)
-                .panel-body #{ doc.content }
+                .panel-body 
+                  != doc.content 
                 .panel-footer.pull-right By&nbsp;
                   strong #{ doc.author } 
                   | At&nbsp;&nbsp;
