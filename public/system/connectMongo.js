@@ -9,4 +9,15 @@ db.open(settings.host, settings.db, settings.port, settings.options, function() 
     settings.port );
 });
 
+db.on('error', function (err) {
+  console.error.bind(console, 'connection error:');
+  //listen BAE mongodb,if except throws then close the connection
+  //why have to do this?Clause it'll be disconnected if it free after 30s by BAE 
+  db.close();
+});
+//when close, reopen a connect
+db.on('close', function() {
+  db.open(settings.host, settings.db, settings.port, settings.options);
+});
+
 module.exports = db;
